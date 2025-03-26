@@ -1,0 +1,28 @@
+{
+    "name": "Survey Login On Return",
+    "description": "When a survey has both <strong>Survey Login</strong> and <strong>Save & Return Later</strong> options enabled, this module provides an additional option for preventing the Survey Login being required when initially accessing the survey (before any data is submitted).<p class=\"font-weight-bold fs11 pl-2\" style=\"border-left:solid #ddd 4px;\">Survey Login not required to start survey</p>In this mode, the Survey Login is a direct replacement for the return codes.",
+    "namespace": "MCRI\\SurveyLoginOnReturn",
+    "authors": [
+        {
+            "name": "Luke Stevens",
+            "email": "luke.stevens@mcri.edu.au",
+            "institution": "Murdoch Children's Research Institute"
+        }
+    ],
+    "framework-version": 15,
+    "system-settings": [ ],
+    "project-settings": [ 
+        {
+            "key": "section",
+            "name": "<div class=\"gray\"><i class=\"fas fa-info-circle mr-1\"></i> You do not need to enable this module's functionality here. Do so on the Survey Settings page for each survey.</div>",
+            "type": "descriptive"
+        },
+        {
+            "key": "survey-name",
+            "name": "Survey name",
+            "required": false,
+            "repeatable": true,
+            "type": "form-list"
+        }
+    ]
+}
