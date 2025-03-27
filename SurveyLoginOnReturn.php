@@ -22,9 +22,8 @@ class SurveyLoginOnReturn extends AbstractExternalModule
     }
     
     public function redcap_every_page_top($project_id) {
-
         if (!defined('PAGE')) return;
-        if (PAGE=='Surveys/edit_info.php' && isset($_GET['page'])) $this->surveySettingsPageBeforeRender(); 
+        if (PAGE=='Surveys/edit_info.php' && isset($_GET['page'])) $this->surveySettingsPageTop(); 
     }
 
     /**
@@ -36,9 +35,10 @@ class SurveyLoginOnReturn extends AbstractExternalModule
      * --> skip survey login
      */
     protected function surveyPageBeforeRender() {
-        global $Proj, $survey_auth_enabled, $survey_auth_enabled_single;
+        global $Proj, $survey_auth_enabled, $survey_auth_enabled_single, $save_and_return;
 
         if ($survey_auth_enabled==0 && $survey_auth_enabled_single==0) return;
+        if ($save_and_return==0) return;
         if (isset($_GET['__return']) && $_GET['__return']==1) return;
         
         $hash = $this->escape($_GET['s']);
@@ -57,7 +57,7 @@ class SurveyLoginOnReturn extends AbstractExternalModule
         $surveyId = $Proj->forms[$instrument]['survey_id'];
         if ($Proj->surveys[$surveyId]['save_and_return']!=1) return;
 
-        $surveysEnabled = $this->getProjectSetting('survey-name');
+        $surveysEnabled = $this->getProjectSetting('survey-name') ?? array(null);
         if (!in_array($instrument, $surveysEnabled)) return;
 
 
@@ -68,18 +68,18 @@ class SurveyLoginOnReturn extends AbstractExternalModule
     }
 
     /**
-     * surveySettingsPageBeforeRender()
+     * surveySettingsPageTop()
      * Is survey login enabled in the project?
      * Are we on a survey settings page?
      * Show option in S&RL section for disabling Survey Login for the first page of the survey (SL only on return).
      */
-    protected function surveySettingsPageBeforeRender() {
-        global $Proj, $survey_auth_enabled, $survey_auth_enabled_single, $form;
+    protected function surveySettingsPageTop() {
+        global $form;
 
         $instrument = $this->escape($_GET['page']);
         if ($instrument!==$form) return;
 
-        $surveysEnabled = $this->getProjectSetting('survey-name');
+        $surveysEnabled = $this->getProjectSetting('survey-name') ?? array(null);
 
         $isEnabled = (in_array($instrument, $surveysEnabled));
 
@@ -131,8 +131,7 @@ class SurveyLoginOnReturn extends AbstractExternalModule
     }
 
     protected function surveySettingsSave() {
-        global $Proj;
-        $surveysEnabled = $this->getProjectSetting('survey-name');
+        $surveysEnabled = $this->getProjectSetting('survey-name') ?? array(null);
         $instrument = $this->escape($_GET['page']);
         $idx = array_search($instrument, $surveysEnabled);
 

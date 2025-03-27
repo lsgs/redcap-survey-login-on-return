@@ -1,5 +1,5 @@
 {
-    "name": "Survey Login On Return",
+    "name": "Survey Login on Return",
     "description": "When a survey has both <strong>Survey Login</strong> and <strong>Save & Return Later</strong> options enabled, this module provides an additional option for preventing the Survey Login being required when initially accessing the survey (before any data is submitted).<p class=\"font-weight-bold fs11 pl-2\" style=\"border-left:solid #ddd 4px;\">Survey Login not required to start survey</p>In this mode, the Survey Login is a direct replacement for the return codes.",
     "namespace": "MCRI\\SurveyLoginOnReturn",
     "authors": [
